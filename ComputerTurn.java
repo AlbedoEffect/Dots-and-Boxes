@@ -555,6 +555,10 @@ public class ComputerTurn {
 		return numFilled == TOTAL;
 	}
 	
+	/*private int[] checkMoves(int rows, int columns, int isHorizMove, int[] bestMove){
+		
+	}*/
+	
 	public int[] minimax(boolean[][] array1, boolean[][] array2, int turn, int depth){
 		int [] bestMove = new int[4];
 		boolean compTurn = turn % 2  == START;
@@ -573,19 +577,26 @@ public class ComputerTurn {
 				System.out.println("Points: " + base[3]);
 				return base;
 		}
+		
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < columns-1; j++){
 				if(array1[i][j])continue;
 				array1[i][j] = true;
-				if(completesSquare(i,j,0,array1,array2,false)){
+				tempMove[0]= i;
+				tempMove[1] = j;
+				tempMove[2] = 0;
+				
+ 				if(completesSquare(i,j,0,array1,array2,true)){
 					if(compTurn){
 						userBoxes++;
+						System.out.println("userBoxes: "  + userBoxes);
 					}else{
 						oppBoxes++;
+						System.out.println("oppBoxes: "  + oppBoxes);
 					}
-					tempMove = minimax(array1,array2,turn,depth+1);
+					tempMove[3] = minimax(array1,array2,turn,depth+1)[3];
 				}else{
-					tempMove = minimax(array1,array2,turn+1,depth+1);
+					tempMove[3] = minimax(array1,array2,turn+1,depth+1)[3];
 				}
 				array1[i][j] = false;
 			if(compTurn){
@@ -609,16 +620,19 @@ public class ComputerTurn {
 		for(int i = 0; i < columns; i++){
 			for(int j = 0; j < rows-1; j++){
 				if(array2[i][j]) continue;
+				tempMove[0]= i;
+				tempMove[1] = j;
+				tempMove[2] = 0;
 				array2[i][j] = true;
-				if(completesSquare(i,j,1,array1,array2,false)){
+				if(completesSquare(i,j,1,array1,array2,true)){
 					if(compTurn){
 						userBoxes++;
 					}else{
 						oppBoxes++;
 					}
-					tempMove = minimax(array1,array2,turn,depth+1);
+					tempMove[3] = minimax(array1,array2,turn,depth+1)[3];
 				}else{
-					tempMove = minimax(array1,array2,turn+1,depth+1);
+					tempMove[3] = minimax(array1,array2,turn+1,depth+1)[3];
 				}
 				array2[i][j] = false;
 				if(compTurn){
@@ -641,14 +655,17 @@ public class ComputerTurn {
 		System.out.println("Move: " + bestMove[3]);
 		return bestMove;
 	}
+	
 	public int evaluate(boolean [][] array1, boolean [][] array2, int turn){
 		int points = 0;
+		System.out.println("Evaluate: User boxes: " + userBoxes + " oppBoxes " + oppBoxes);
 		if(turn%2 == START){
 			points = userBoxes - oppBoxes;
 		}else{
 			points = oppBoxes-userBoxes;
 		}
-		for(int i = 0; i < rows; i++){
+		
+		/*for(int i = 0; i < rows; i++){
 			for(int j = 0; j < columns-1; j++){
 				points +=checkMoves(array1,array2,turn,i,j,0);
 			}
@@ -658,7 +675,8 @@ public class ComputerTurn {
 			for(int j = 0; j < rows-1; j++){
 				points += checkMoves(array1,array2,turn,i,j,1);
 			}
-		}
+		}*/
+		
 		return points;
 	}
 	

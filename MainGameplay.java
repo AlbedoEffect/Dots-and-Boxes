@@ -146,6 +146,7 @@ public class MainGameplay extends JPanel{
 							if(!(horizLineArray2[i][k])){
 								numFilled++;
 								if(!computer.completesSquare(i, k, 0, horizLineArray2, vertLineArray2,false)){
+									System.out.println("Incremented turn, person");
 									turn++;
 								}
 								horizLineArray2[i][k] = true;
@@ -171,6 +172,7 @@ public class MainGameplay extends JPanel{
 								System.out.println(
 										"vert Test " + computer.completesSquare(i, k, 1, horizLineArray2, vertLineArray2,false));
 								if(!computer.completesSquare(i, k, 1, horizLineArray2, vertLineArray2,false)){
+									System.out.println("Incremented turn, person");
 									turn++;
 								}
 								numFilled++;
@@ -194,8 +196,8 @@ public class MainGameplay extends JPanel{
 				System.out.println("completion: " + move[0] + " " + move[1] + " " + move[2] + " " +
 						computer.completesSquare(move[0],move[1],move[2],horizLineArray2,vertLineArray2,false));
 				if(!computer.completesSquare(move[0],move[1],move[2],horizLineArray2,vertLineArray2,false)){
+					System.out.println("Incremented turn, comp");
 					turn++;
-				}else{ 
 				}
 				if(move[2] == 0){
 					compFilled1[move[0]][move[1]] = true;
